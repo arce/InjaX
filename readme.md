@@ -1,18 +1,12 @@
 # InjaX
 
-[![GitHub stars](https://img.shields.io/github/stars/arce/injax)](https://github.com/arce/injax/stargazers)
-[![GitHub license](https://img.shields.io/github/license/arce/injax)](https://github.com/arce/injax/blob/main/LICENSE)
-[![GitHub releases](https://img.shields.io/github/v/release/arce/injax)](https://github.com/arce/injax/releases)
 [![C++20](https://img.shields.io/badge/C%2B%2B-20-blue)](https://isocpp.org/)
 
-**InjaX** is a modern, high-performance template engine for C++ that brings the elegance of Jinja2 syntax to the C++ ecosystem. Use it as a header-only library or a standalone CLI tool.
+**InjaX** is a modern, high-performance template engine for C++ that brings the elegance of Jinja2 syntax to the C++ ecosystem. Use it as a standalone CLI tool.
 
 ## Quick Start
 
 ```bash
-# Download a binary for your platform
-curl -L https://github.com/arce/injax/releases/download/v2.0.1/InjaX-linux-x64.tar.gz | tar xz
-
 # Render a template
 injax template.txt data.json output.html
 ```
@@ -23,20 +17,7 @@ injax template.txt data.json output.html
 - **Fast** — Compiled to efficient static binaries, no interpreter overhead
 - **Zero heavy deps** — Header-only with inja and nlohmann/json
 - **Multi-format data** — JSON natively, plus plugins for CSV, YAML, XML, and INI
-- **Extensible** — Plugin system for custom data readers
-
-## Installation
-
-### Download pre-built binaries
-
-| Platform | Architecture | Download |
-|----------|--------------|----------|
-| macOS | Apple Silicon | [InjaX-darwin-arm64.tar.gz](https://github.com/arce/injax/releases/download/v2.0.1/InjaX-darwin-arm64.tar.gz) (4.2 MB) |
-| macOS | Intel | [InjaX-darwin-x64.tar.gz](https://github.com/arce/injax/releases/download/v2.0.1/InjaX-darwin-x64.tar.gz) (4.5 MB) |
-| Windows | ARM64 | [InjaX-windows-arm64.zip](https://github.com/arce/injax/releases/download/v2.0.1/InjaX-windows-arm64.zip) (3.8 MB) |
-| Windows | x64 | [InjaX-windows-x64.zip](https://github.com/arce/injax/releases/download/v2.0.1/InjaX-windows-x64.zip) (4.1 MB) |
-| Linux | ARM64 | [InjaX-linux-arm64.tar.gz](https://github.com/arce/injax/releases/download/v2.0.1/InjaX-linux-arm64.tar.gz) (3.5 MB) |
-| Linux | x64 | [InjaX-linux-x64.tar.gz](https://github.com/arce/injax/releases/download/v2.0.1/InjaX-linux-x64.tar.gz) (3.9 MB) |
+- **Extensible** — Plugin system for custom modules
 
 ## Example
 
@@ -93,25 +74,6 @@ You have 2 new messages.
 ```
 
 Available tests: `isString`, `isNumber`, `isArray`, `isObject`, `isDefined`, `isEmpty`, `contains`, `matches`, `startsWith`, `endsWith`, `isEven`, `isOdd`
-
-## Supported Data Formats
-
-| Format | Extension | Built-in | Requires |
-|--------|-----------|----------|----------|
-| JSON | `.json` | ✅ Yes | None |
-| CSV | `.csv` | ❌ No | `libcsv.so` plugin |
-| YAML | `.yaml`, `.yml` | ❌ No | `libyaml.so` plugin |
-| XML | `.xml` | ❌ No | `libxml.so` plugin |
-| INI | `.ini` | ❌ No | `libini.so` plugin |
-
-## Use Cases
-
-- **Web development** — Generate HTML pages, dashboards, portals
-- **Email campaigns** — Personalized newsletters and notifications
-- **Code generation** — Boilerplate, SQL queries, Terraform configs
-- **DevOps** — Dynamic configs for Ansible, Kubernetes, Nginx
-- **Document generation** — Reports, invoices, Markdown docs
-- **API responses** — Transform JSON data on the fly
 
 ## License
 
