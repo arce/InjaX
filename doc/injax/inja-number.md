@@ -2,7 +2,7 @@
 
 ## NAME
 
-number-filters - InjaX numeric operations and formatting functions for JSON data
+number-filters - InjaX numeric operations and formatting functions
 
 ## SYNOPSIS
 
@@ -22,17 +22,25 @@ Returns absolute value of a number or each number in an array.
 
 **Special handling:** For integer `LLONG_MIN`, returns `LLONG_MAX`.
 
-**Example:**
-
-json
+**Example with literal array:**
 
 ```
 {{ -42 | abs }} → 42
-{{ [-5, 3, -2, 0] | abs | tojson }} → [5, 3, 2, 0]
+{{ [-5, 3, -2, 0] | abs }} → [5, 3, 2, 0]
 {{ "-123.45" | abs }} → 123.45
 ```
 
+**Example with external JSON data:**
 
+Given an external JSON file `data.json`:
+```json
+[-5, 3, -2, 0]
+```
+
+Loaded as variable `numbers`:
+```
+{{ numbers | abs }} → [5, 3, 2, 0]
+```
 
 ### `filesizeformat`
 
@@ -54,9 +62,7 @@ Formats byte count as human-readable file size.
 | TB      | TiB    |
 | PB      | PiB    |
 
-**Example:**
-
-json
+**Examples:**
 
 ```
 {{ 0 | filesizeformat }} → "0 B"
@@ -66,7 +72,20 @@ json
 {{ 500 | filesizeformat }} → "500 B"
 ```
 
+**Example with external JSON data:**
 
+Given an external JSON file `fileinfo.json`:
+```json
+{
+  "size_bytes": 1536000,
+  "use_binary": false
+}
+```
+
+Loaded as variable `file`:
+```
+{{ file.size_bytes | filesizeformat(file.use_binary) }} → "1.5 MB"
+```
 
 ### `indent`
 
@@ -79,9 +98,7 @@ Indents each line of text with spaces.
 - `indent_first`: Whether to indent first line (default: false)
 - `blank`: Whether to indent blank lines (default: false)
 
-**Example:**
-
-json
+**Examples:**
 
 ```
 {{ "line1\nline2\n\nline4" | indent(2, true) }}
@@ -91,7 +108,22 @@ json
 → "    first\n    second"
 ```
 
+**Example with external JSON data:**
 
+Given an external JSON file `textdata.json`:
+```json
+{
+  "content": "line1\nline2\n\nline4",
+  "spaces": 2,
+  "indent_first_line": true
+}
+```
+
+Loaded as variable `data`:
+```
+{{ data.content | indent(data.spaces, data.indent_first_line) }}
+→ "  line1\n  line2\n\n  line4"
+```
 
 ### `random`
 
@@ -105,9 +137,7 @@ Selects random element from array or random character from string.
 
 **Note:** Uses thread-local Mersenne Twister with high-resolution clock seeding.
 
-**Example:**
-
-json
+**Examples with literal values:**
 
 ```
 {{ [1,2,3,4,5] | random }} → 3 (random)
@@ -115,7 +145,33 @@ json
 {{ 42 | random }} → 42
 ```
 
+**Example with external JSON data:**
 
+Given an external JSON file `options.json`:
+```json
+["red", "green", "blue", "yellow"]
+```
+
+Loaded as variable `colors`:
+```
+{{ colors | random }} → "green" (random)
+```
+
+**Example with array from external JSON:**
+
+Given an external JSON file `dataset.json`:
+```json
+{
+  "items": [10, 20, 30, 40, 50],
+  "labels": ["A", "B", "C", "D", "E"]
+}
+```
+
+Loaded as variable `data`:
+```
+{{ data.items | random }} → 30 (random)
+{{ data.labels | random }} → "C" (random)
+```
 
 ## SEE ALSO
 

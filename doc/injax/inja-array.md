@@ -2,30 +2,28 @@
 
 ## NAME
 
-array-filters - InjaX array manipulation functions for JSON data
+array-filters - InjaX array manipulation functions
 
 ## SYNOPSIS
 
-Filter operations on JSON arrays: mapping, selecting, rejecting, grouping, sorting, batching, zipping, and numeric aggregation.
+Filter operations on arrays: mapping, selecting, rejecting, grouping, sorting, batching, zipping, and numeric aggregation.
+
+**IMPORTANT:** JSON data must reside in an external file and be loaded through the Inja context. The examples assume context variables containing arrays and JSON objects.
 
 ## FILTERS
 
 ### `array`
 
-Creates a JSON array from the provided arguments.
+Creates an array from the provided arguments.
 
 **Parameters:** Any number of values, each becomes an element.
 
 **Example:**
 
-json
-
 ```
-{{ [1, 2, 3] | array | tojson }} → [1,2,3]
-{{ "a", "b", "c" | array | tojson }} → ["a","b","c"]
+{{ [1, 2, 3] | array }} → [1,2,3]
+{{ "a", "b", "c" | array }} → ["a","b","c"]
 ```
-
-
 
 ### `append`
 
@@ -38,13 +36,11 @@ Appends an item to an array.
 
 **Example:**
 
-json
-
 ```
-{{ [1,2,3] | append(4) | tojson }} → [1,2,3,4]
+{{ my_array | append(4) }}
 ```
 
-
+*Note: `my_array` is a context variable containing `[1,2,3]`*
 
 ### `batch`
 
@@ -58,57 +54,57 @@ Splits array into batches of specified size.
 
 **Example:**
 
-json
-
 ```
-{{ [1,2,3,4,5] | batch(2) | tojson }} → [[1,2],[3,4],[5]]
-{{ [1,2,3] | batch(4, "x") | tojson }} → [[1,2,3,"x"]]
+{{ [1,2,3,4,5] | batch(2) }} → [[1,2],[3,4],[5]]
+{{ [1,2,3] | batch(4, "x") }} → [[1,2,3,"x"]]
 ```
-
-
 
 ### `dictsort`
 
-Sorts object key-value pairs.
+Sorts dictionary key-value pairs.
 
 **Parameters:**
 
-- `obj`: JSON object
+- `obj`: Dictionary/object (loaded from external JSON file)
 - `by`: Sort criteria - "key" (default) or "value"
 
 **Returns:** Array of objects with `key` and `value` properties.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+{"c": 3, "a": 1, "b": 2}
 ```
-{{ {"c":3,"a":1,"b":2} | dictsort("key") | tojson }}
+
+Loaded as variable `data` in the Inja context:
+```
+{{ data | dictsort("key") }}
 → [{"key":"a","value":1},{"key":"b","value":2},{"key":"c","value":3}]
 ```
 
-
-
 ### `items`
 
-Converts object to array of key-value pairs.
+Converts dictionary to array of key-value pairs.
 
 **Parameters:**
 
-- `obj`: JSON object
+- `obj`: Dictionary/object (loaded from external JSON file)
 
 **Returns:** Array of objects with `key` and `value` properties.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+{"name": "John", "age": 30}
 ```
-{{ {"name":"John","age":30} | items | tojson }}
+
+Loaded as variable `person` in the context:
+```
+{{ person | items }}
 → [{"key":"name","value":"John"},{"key":"age","value":30}]
 ```
-
-
 
 ### `make_list`
 
@@ -122,14 +118,14 @@ Converts any value to an array.
 
 **Example:**
 
-json
-
 ```
-{{ 42 | make_list | tojson }} → [42]
-{{ {"a":1,"b":2} | make_list | tojson }} → [1,2]
+{{ 42 | make_list }} → [42]
 ```
 
-
+Given an external JSON object `{"a":1,"b":2}` loaded as `data`:
+```
+{{ data | make_list }} → [1,2]
+```
 
 ### `map`
 
@@ -142,30 +138,27 @@ Extracts attribute or index from each array element.
 
 **Example:**
 
-json
-
-```
-{{ [{"name":"Alice"},{"name":"Bob"}] | map("name") | tojson }} → ["Alice","Bob"]
-{{ [[1,2,3],[4,5,6]] | map(1) | tojson }} → [2,5]
+Given an external JSON file:
+```json
+[{"name":"Alice"},{"name":"Bob"}]
 ```
 
-
+Loaded as variable `users`:
+```
+{{ users | map("name") }} → ["Alice","Bob"]
+```
 
 ### `obj`
 
-Creates a JSON object from alternating key-value arguments.
+Creates a dictionary from alternating key-value arguments.
 
 **Parameters:** Even number of arguments: key1, value1, key2, value2, ...
 
 **Example:**
 
-json
-
 ```
-{{ "name","John","age",30 | obj | tojson }} → {"name":"John","age":30}
+{{ "name","John","age",30 | obj }} → {"name":"John","age":30}
 ```
-
-
 
 ### `regroup`
 
@@ -180,16 +173,21 @@ Groups array elements by attribute value.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+[
+  {"type":"A","val":1},
+  {"type":"B","val":2},
+  {"type":"A","val":3}
+]
 ```
-{{ [{"type":"A","val":1},{"type":"B","val":2},{"type":"A","val":3}] 
-   | regroup("type") | tojson }}
+
+Loaded as variable `items`:
+```
+{{ items | regroup("type") }}
 → [{"grouper":"A","list":[{"type":"A","val":1},{"type":"A","val":3}]},
    {"grouper":"B","list":[{"type":"B","val":2}]}]
 ```
-
-
 
 ### `reject`
 
@@ -202,13 +200,9 @@ Filters out array elements equal to a value.
 
 **Example:**
 
-json
-
 ```
-{{ [1,2,3,2,1] | reject(2) | tojson }} → [1,3,1]
+{{ [1,2,3,2,1] | reject(2) }} → [1,3,1]
 ```
-
-
 
 ### `rejectattr`
 
@@ -223,15 +217,20 @@ Filters out elements whose attribute passes a test.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+[
+  {"name":"Alice"},
+  {"name":""},
+  {"name":"Bob"}
+]
 ```
-{{ [{"name":"Alice"},{"name":""},{"name":"Bob"}] 
-   | rejectattr("name", "none") | tojson }}
+
+Loaded as variable `data`:
+```
+{{ data | rejectattr("name", "none") }}
 → [{"name":"Alice"},{"name":"Bob"}]
 ```
-
-
 
 ### `select`
 
@@ -244,13 +243,9 @@ Selects array elements equal to a value.
 
 **Example:**
 
-json
-
 ```
-{{ [1,2,3,2,1] | select(2) | tojson }} → [2,2]
+{{ [1,2,3,2,1] | select(2) }} → [2,2]
 ```
-
-
 
 ### `selectattr`
 
@@ -265,15 +260,19 @@ Selects elements whose attribute passes a test.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+[
+  {"name":"Alice","age":25},
+  {"name":"Bob","age":30}
+]
 ```
-{{ [{"name":"Alice","age":25},{"name":"Bob","age":30}] 
-   | selectattr("age", "equalto", 30) | tojson }}
+
+Loaded as variable `people`:
+```
+{{ people | selectattr("age", "equalto", 30) }}
 → [{"name":"Bob","age":30}]
 ```
-
-
 
 ### `slice`
 
@@ -288,14 +287,10 @@ Extracts a slice from an array.
 
 **Example:**
 
-json
-
 ```
-{{ [0,1,2,3,4,5] | slice(1,4) | tojson }} → [1,2,3]
-{{ [0,1,2,3,4,5] | slice(5,0,-1) | tojson }} → [5,4,3,2,1]
+{{ [0,1,2,3,4,5] | slice(1,4) }} → [1,2,3]
+{{ [0,1,2,3,4,5] | slice(5,0,-1) }} → [5,4,3,2,1]
 ```
-
-
 
 ### `sort_by`
 
@@ -308,15 +303,19 @@ Sorts array by attribute value.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+[
+  {"name":"Bob","age":30},
+  {"name":"Alice","age":25}
+]
 ```
-{{ [{"name":"Bob","age":30},{"name":"Alice","age":25}] 
-   | sort_by("name") | tojson }}
+
+Loaded as variable `people`:
+```
+{{ people | sort_by("name") }}
 → [{"name":"Alice","age":25},{"name":"Bob","age":30}]
 ```
-
-
 
 ### `sum`
 
@@ -330,34 +329,29 @@ Calculates sum of numeric values in array.
 
 **Example:**
 
-json
-
 ```
 {{ [1,2,3,4] | sum }} → 10
 {{ ["1.5","2.5",3] | sum }} → 7.0
 ```
 
-
-
 ### `tojson`
 
-Converts JSON value to JSON string representation.
+Converts value to JSON string representation.
 
 **Parameters:**
 
-- `value`: Any JSON value
+- `value`: Any value
 
 **Returns:** String
 
+**Note:** This filter requires data to be accessible from the Inja context.
+
 **Example:**
 
-json
-
+Given a variable `data` with `{"name":"John"}` loaded from an external JSON file:
 ```
-{{ {"name":"John"} | tojson }} → "{\"name\":\"John\"}"
+{{ data | tojson }} → "{\"name\":\"John\"}"
 ```
-
-
 
 ### `unique`
 
@@ -371,13 +365,9 @@ Removes duplicate values from array.
 
 **Example:**
 
-json
-
 ```
-{{ [1,2,2,3,3,3,1] | unique | tojson }} → [1,2,3]
+{{ [1,2,2,3,3,3,1] | unique }} → [1,2,3]
 ```
-
-
 
 ### `zip`
 
@@ -387,13 +377,9 @@ Zips multiple arrays into array of tuples (shortest length).
 
 **Example:**
 
-json
-
 ```
-{{ [1,2,3], ["a","b","c"] | zip | tojson }} → [[1,"a"],[2,"b"],[3,"c"]]
+{{ [1,2,3], ["a","b","c"] | zip }} → [[1,"a"],[2,"b"],[3,"c"]]
 ```
-
-
 
 ### `zip_array`
 
@@ -405,13 +391,9 @@ Zips an array of arrays into array of tuples.
 
 **Example:**
 
-json
-
 ```
-{{ [[1,2,3],["a","b","c"]] | zip_array | tojson }} → [[1,"a"],[2,"b"],[3,"c"]]
+{{ [[1,2,3],["a","b","c"]] | zip_array }} → [[1,"a"],[2,"b"],[3,"c"]]
 ```
-
-
 
 ### `zip_obj`
 
@@ -424,14 +406,10 @@ Zips keys array with data arrays into array of objects.
 
 **Example:**
 
-json
-
 ```
-{{ ["name","age"], ["Alice","Bob"], [25,30] | zip_obj | tojson }}
+{{ ["name","age"], ["Alice","Bob"], [25,30] | zip_obj }}
 → [{"name":"Alice","age":25},{"name":"Bob","age":30}]
 ```
-
-
 
 ## TESTS FOR ATTRIBUTES
 

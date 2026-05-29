@@ -2,7 +2,7 @@
 
 ## NAME
 
-html-filters - InjaX HTML escaping and formatting functions for JSON data
+html-filters - InjaX HTML escaping and formatting functions
 
 ## SYNOPSIS
 
@@ -22,16 +22,14 @@ Escapes HTML special characters in string.
 
 | Character | Entity |
 | :-------- | :----- |
-| &         | &      |
-| <         | <      |
-| >         | >      |
-| "         | "      |
-| '         | '      |
-| /         | /      |
+| &         | &amp;  |
+| <         | &lt;   |
+| >         | &gt;   |
+| "         | &quot; |
+| '         | &#39;  |
+| /         | &#47;  |
 
 **Example:**
-
-json
 
 ```
 {{ "<script>alert('xss')</script>" | escape }}
@@ -56,14 +54,10 @@ Returns raw string without escaping (bypasses auto-escaping).
 
 **Example:**
 
-json
-
 ```
 {{ "<strong>Bold</strong>" | safe }}
 → "<strong>Bold</strong>"
 ```
-
-
 
 ### `striptags`
 
@@ -75,13 +69,9 @@ Removes all HTML/XML tags from string.
 
 **Example:**
 
-json
-
 ```
 {{ "<p>Hello <b>world</b>!</p>" | striptags }} → "Hello world!"
 ```
-
-
 
 ### `urlencode`
 
@@ -91,18 +81,14 @@ Encodes string for use in URL query parameters.
 
 - `input`: String to encode
 
-**Encoding:** Alphanumeric characters and `-_.~` remain unchanged; all others become `%XX`hexadecimal.
+**Encoding:** Alphanumeric characters and `-_.~` remain unchanged; all others become `%XX` hexadecimal.
 
 **Example:**
-
-json
 
 ```
 {{ "hello world" | urlencode }} → "hello%20world"
 {{ "café & tea" | urlencode }} → "caf%C3%A9%20%26%20tea"
 ```
-
-
 
 ### `urlize`
 
@@ -115,14 +101,12 @@ Converts URLs in text to clickable HTML links.
 
 **Features:**
 
-- Recognizes http://, https://, and [www](https://www/). URLs
-- Auto-prepends http:// to [www](https://www/). links
+- Recognizes http://, https://, and www. URLs
+- Auto-prepends http:// to www. links
 - Truncates long URLs with "..."
 - HTML-escapes link text
 
 **Example:**
-
-json
 
 ```
 {{ "Visit https://example.com/path" | urlize }}
@@ -132,38 +116,42 @@ json
 → "<a href=\"http://www.example.com/very/long/path\">www.exa...path</a>"
 ```
 
-
-
 ### `xmlattr`
 
-Converts JSON object to XML/HTML attributes string.
+Converts dictionary/object to XML/HTML attributes string.
 
 **Parameters:**
 
-- `obj`: JSON object with attribute key-value pairs
+- `obj`: Dictionary/object with attribute key-value pairs (loaded from external JSON file)
 
 **Returns:** String starting with space, containing `key="value"` pairs, values HTML-escaped.
 
 **Example:**
 
-json
-
+Given an external JSON file:
+```json
+{"class": "btn", "id": "submit", "disabled": true}
 ```
-{{ {"class":"btn", "id":"submit", "disabled":true} | xmlattr }}
+
+Loaded as variable `attrs` in the Inja context:
+```
+{{ attrs | xmlattr }}
 → " class=\"btn\" id=\"submit\" disabled=\"true\""
 ```
 
+**Usage in template:**
 
-
-Usage in template:
-
-html
-
-```
-<div{{ {"class":"highlight", "data-id":123} | xmlattr }}>Content</div>
+Given an external JSON file `attributes.json`:
+```json
+{"class": "highlight", "data-id": 123}
 ```
 
+Loaded as variable `html_attrs`:
+```html
+<div{{ html_attrs | xmlattr }}>Content</div>
+```
 
+→ `<div class="highlight" data-id="123">Content</div>`
 
 ## SEE ALSO
 
