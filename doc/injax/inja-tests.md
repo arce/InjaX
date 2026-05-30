@@ -30,8 +30,8 @@ Checks if value exists in array, string, or object.
 **Examples with literal values:**
 
 ```
-{% if [1,2,3] is contains(2) %}yes{% endif %} → "yes"
-{% if "hello" is contains("ell") %}yes{% endif %} → "yes"
+{% if contains([1,2,3], 2) %}yes{% endif %} → "yes"
+{% if contains("hello", "ell") %}yes{% endif %} → "yes"
 ```
 
 **Examples with external JSON data:**
@@ -47,9 +47,9 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.numbers is contains(2) %}yes{% endif %} → "yes"
-{% if data.text is contains("ell") %}yes{% endif %} → "yes"
-{% if data.obj is contains("a") %}yes{% endif %} → "yes"
+{% if contains(data.numbers, 2) %}yes{% endif %} → "yes"
+{% if contains(data.text, "ell") %}yes{% endif %} → "yes"
+{% if contains(data.obj, "a") %}yes{% endif %} → "yes"
 ```
 
 ### `endsWith`
@@ -64,7 +64,7 @@ Checks if string ends with suffix.
 **Example with literal value:**
 
 ```
-{% if "hello.txt" is endsWith(".txt") %}yes{% endif %} → "yes"
+{% if endsWith("hello.txt", ".txt") %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -76,7 +76,7 @@ Given an external JSON file `files.json`:
 
 Loaded as variable `file`:
 ```
-{% if file.filename is endsWith(".txt") %}yes{% endif %} → "yes"
+{% if endsWith(file.filename, ".txt") %}yes{% endif %} → "yes"
 ```
 
 ### `hasKey`
@@ -97,7 +97,7 @@ Given an external JSON file `person.json`:
 
 Loaded as variable `person`:
 ```
-{% if person is hasKey("age") %}yes{% endif %} → "yes"
+{% if hasKey(person, "age") %}yes{% endif %} → "yes"
 ```
 
 ### `isArray`
@@ -109,7 +109,7 @@ Checks if value is an array.
 **Example with literal value:**
 
 ```
-{% if [1,2,3] is isArray %}yes{% endif %} → "yes"
+{% if isArray([1,2,3]) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -121,7 +121,7 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.items is isArray %}yes{% endif %} → "yes"
+{% if isArray(data.items) %}yes{% endif %} → "yes"
 ```
 
 ### `isBoolean`
@@ -133,7 +133,7 @@ Checks if value is boolean (true/false).
 **Example with literal value:**
 
 ```
-{% if true is isBoolean %}yes{% endif %} → "yes"
+{% if isBoolean(true) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -145,7 +145,7 @@ Given an external JSON file `config.json`:
 
 Loaded as variable `config`:
 ```
-{% if config.enabled is isBoolean %}yes{% endif %} → "yes"
+{% if isBoolean(config.enabled) %}yes{% endif %} → "yes"
 ```
 
 ### `isContained`
@@ -160,7 +160,7 @@ Checks if item exists in array (reverse of contains).
 **Example with literal value:**
 
 ```
-{% if 2 is isContained([1,2,3]) %}yes{% endif %} → "yes"
+{% if isContained(2, [1,2,3]) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -175,7 +175,7 @@ Given an external JSON file `dataset.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.value is isContained(data.list) %}yes{% endif %} → "yes"
+{% if isContained(data.value, data.list) %}yes{% endif %} → "yes"
 ```
 
 ### `isDefined`
@@ -187,7 +187,7 @@ Checks if value is not null.
 **Example with literal value:**
 
 ```
-{% if null is isDefined %}no{% else %}yes{% endif %} → "yes"
+{% if isDefined(null) %}no{% else %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -199,7 +199,7 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.value is isDefined %}no{% else %}yes{% endif %} → "yes"
+{% if isDefined(data.value) %}no{% else %}yes{% endif %} → "yes"
 ```
 
 ### `isDivisibleBy`
@@ -214,7 +214,7 @@ Checks if integer is divisible by another integer.
 **Example with literal value:**
 
 ```
-{% if 10 is isDivisibleBy(2) %}yes{% endif %} → "yes"
+{% if isDivisibleBy(10, 2) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -226,7 +226,7 @@ Given an external JSON file `numbers.json`:
 
 Loaded as variable `nums`:
 ```
-{% if nums.number is isDivisibleBy(nums.divisor) %}yes{% endif %} → "yes"
+{% if isDivisibleBy(nums.number, nums.divisor) %}yes{% endif %} → "yes"
 ```
 
 ### `isEmpty`
@@ -238,8 +238,8 @@ Checks if string, array, or object is empty.
 **Examples with literal values:**
 
 ```
-{% if "" is isEmpty %}yes{% endif %} → "yes"
-{% if [] is isEmpty %}yes{% endif %} → "yes"
+{% if isEmpty("") %}yes{% endif %} → "yes"
+{% if isEmpty([]) %}yes{% endif %} → "yes"
 ```
 
 **Examples with external JSON data:**
@@ -255,9 +255,9 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.empty_string is isEmpty %}yes{% endif %} → "yes"
-{% if data.empty_array is isEmpty %}yes{% endif %} → "yes"
-{% if data.non_empty is isEmpty %}no{% endif %} → "no"
+{% if isEmpty(data.empty_string) %}yes{% endif %} → "yes"
+{% if isEmpty(data.empty_array) %}yes{% endif %} → "yes"
+{% if isEmpty(data.non_empty) %}no{% endif %} → "no"
 ```
 
 ### `isEscaped`
@@ -269,7 +269,7 @@ Checks if string contains HTML escape sequences.
 **Example with literal value:**
 
 ```
-{% if "&lt;tag&gt;" is isEscaped %}yes{% endif %} → "yes"
+{% if isEscaped("&lt;tag&gt;") %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -281,8 +281,8 @@ Given an external JSON file `html.json`:
 
 Loaded as variable `html`:
 ```
-{% if html.escaped is isEscaped %}yes{% endif %} → "yes"
-{% if html.raw is isEscaped %}no{% endif %} → "no"
+{% if isEscaped(html.escaped) %}yes{% endif %} → "yes"
+{% if isEscaped(html.raw) %}no{% endif %} → "no"
 ```
 
 ### `isEven`
@@ -294,7 +294,7 @@ Checks if integer is even.
 **Example with literal value:**
 
 ```
-{% if 42 is isEven %}yes{% endif %} → "yes"
+{% if isEven(42) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -306,7 +306,7 @@ Given an external JSON file `numbers.json`:
 
 Loaded as variable `num`:
 ```
-{% if num.value is isEven %}yes{% endif %} → "yes"
+{% if isEven(num.value) %}yes{% endif %} → "yes"
 ```
 
 ### `isFloat`
@@ -318,7 +318,7 @@ Checks if value is floating-point number.
 **Example with literal value:**
 
 ```
-{% if 3.14 is isFloat %}yes{% endif %} → "yes"
+{% if isFloat(3.14) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -330,8 +330,8 @@ Given an external JSON file `values.json`:
 
 Loaded as variable `vals`:
 ```
-{% if vals.pi is isFloat %}yes{% endif %} → "yes"
-{% if vals.answer is isFloat %}no{% endif %} → "no"
+{% if isFloat(vals.pi) %}yes{% endif %} → "yes"
+{% if isFloat(vals.answer) %}no{% endif %} → "no"
 ```
 
 ### `isInteger`
@@ -343,7 +343,7 @@ Checks if value is integer number.
 **Example with literal value:**
 
 ```
-{% if 42 is isInteger %}yes{% endif %} → "yes"
+{% if isInteger(42) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -355,8 +355,8 @@ Given an external JSON file `values.json`:
 
 Loaded as variable `vals`:
 ```
-{% if vals.count is isInteger %}yes{% endif %} → "yes"
-{% if vals.pi is isInteger %}no{% endif %} → "no"
+{% if isInteger(vals.count) %}yes{% endif %} → "yes"
+{% if isInteger(vals.pi) %}no{% endif %} → "no"
 ```
 
 ### `isIterable`
@@ -368,7 +368,7 @@ Checks if value is iterable (array or object).
 **Examples with literal values:**
 
 ```
-{% if [1,2,3] is isIterable %}yes{% endif %} → "yes"
+{% if isIterable([1,2,3]) %}yes{% endif %} → "yes"
 ```
 
 **Examples with external JSON data:**
@@ -384,9 +384,9 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.list is isIterable %}yes{% endif %} → "yes"
-{% if data.dict is isIterable %}yes{% endif %} → "yes"
-{% if data.string is isIterable %}no{% endif %} → "no"
+{% if isIterable(data.list) %}yes{% endif %} → "yes"
+{% if isIterable(data.dict) %}yes{% endif %} → "yes"
+{% if isIterable(data.string) %}no{% endif %} → "no"
 ```
 
 ### `isLower`
@@ -398,7 +398,7 @@ Checks if string contains no uppercase letters (non-letters ignored).
 **Example with literal value:**
 
 ```
-{% if "hello 123" is isLower %}yes{% endif %} → "yes"
+{% if isLower("hello 123") %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -410,8 +410,8 @@ Given an external JSON file `strings.json`:
 
 Loaded as variable `str`:
 ```
-{% if str.lower is isLower %}yes{% endif %} → "yes"
-{% if str.upper is isLower %}no{% endif %} → "no"
+{% if isLower(str.lower) %}yes{% endif %} → "yes"
+{% if isLower(str.upper) %}no{% endif %} → "no"
 ```
 
 ### `isMapping`
@@ -429,8 +429,8 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.obj is isMapping %}yes{% endif %} → "yes"
-{% if data.arr is isMapping %}no{% endif %} → "no"
+{% if isMapping(data.obj) %}yes{% endif %} → "yes"
+{% if isMapping(data.arr) %}no{% endif %} → "no"
 ```
 
 ### `isNone`
@@ -442,7 +442,7 @@ Checks if value is null.
 **Example with literal value:**
 
 ```
-{% if null is isNone %}yes{% endif %} → "yes"
+{% if isNone(null) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -454,7 +454,7 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.value is isNone %}yes{% endif %} → "yes"
+{% if isNone(data.value) %}yes{% endif %} → "yes"
 ```
 
 ### `isNull`
@@ -470,7 +470,7 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.value is isNull %}yes{% endif %} → "yes"
+{% if isNull(data.value) %}yes{% endif %} → "yes"
 ```
 
 ### `isNumber`
@@ -482,7 +482,7 @@ Checks if value is number (integer or float).
 **Example with literal value:**
 
 ```
-{% if 42 is isNumber %}yes{% endif %} → "yes"
+{% if isNumber(42) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -494,9 +494,9 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.count is isNumber %}yes{% endif %} → "yes"
-{% if data.pi is isNumber %}yes{% endif %} → "yes"
-{% if data.text is isNumber %}no{% endif %} → "no"
+{% if isNumber(data.count) %}yes{% endif %} → "yes"
+{% if isNumber(data.pi) %}yes{% endif %} → "yes"
+{% if isNumber(data.text) %}no{% endif %} → "no"
 ```
 
 ### `isObject`
@@ -514,8 +514,8 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.obj is isObject %}yes{% endif %} → "yes"
-{% if data.arr is isObject %}no{% endif %} → "no"
+{% if isObject(data.obj) %}yes{% endif %} → "yes"
+{% if isObject(data.arr) %}no{% endif %} → "no"
 ```
 
 ### `isOdd`
@@ -527,7 +527,7 @@ Checks if integer is odd.
 **Example with literal value:**
 
 ```
-{% if 41 is isOdd %}yes{% endif %} → "yes"
+{% if isOdd(41) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -539,7 +539,7 @@ Given an external JSON file `numbers.json`:
 
 Loaded as variable `num`:
 ```
-{% if num.value is isOdd %}yes{% endif %} → "yes"
+{% if isOdd(num.value) %}yes{% endif %} → "yes"
 ```
 
 ### `isSequence`
@@ -551,7 +551,7 @@ Checks if value is array.
 **Example with literal value:**
 
 ```
-{% if [1,2,3] is isSequence %}yes{% endif %} → "yes"
+{% if isSequence([1,2,3]) %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -563,8 +563,8 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.items is isSequence %}yes{% endif %} → "yes"
-{% if data.obj is isSequence %}no{% endif %} → "no"
+{% if isSequence(data.items) %}yes{% endif %} → "yes"
+{% if isSequence(data.obj) %}no{% endif %} → "no"
 ```
 
 ### `isString`
@@ -576,7 +576,7 @@ Checks if value is string.
 **Example with literal value:**
 
 ```
-{% if "hello" is isString %}yes{% endif %} → "yes"
+{% if isString("hello") %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -588,8 +588,8 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.text is isString %}yes{% endif %} → "yes"
-{% if data.number is isString %}no{% endif %} → "no"
+{% if isString(data.text) %}yes{% endif %} → "yes"
+{% if isString(data.number) %}no{% endif %} → "no"
 ```
 
 ### `isUndefined`
@@ -607,7 +607,7 @@ Given an external JSON file `data.json`:
 
 Loaded as variable `data`:
 ```
-{% if data.value is isUndefined %}yes{% endif %} → "yes"
+{% if isUndefined(data.value) %}yes{% endif %} → "yes"
 ```
 
 ### `isUpper`
@@ -619,7 +619,7 @@ Checks if string contains no lowercase letters (non-letters ignored).
 **Example with literal value:**
 
 ```
-{% if "HELLO 123" is isUpper %}yes{% endif %} → "yes"
+{% if isUpper("HELLO 123") %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -631,8 +631,8 @@ Given an external JSON file `strings.json`:
 
 Loaded as variable `str`:
 ```
-{% if str.upper is isUpper %}yes{% endif %} → "yes"
-{% if str.lower is isUpper %}no{% endif %} → "no"
+{% if isUpper(str.upper) %}yes{% endif %} → "yes"
+{% if isUpper(str.lower) %}no{% endif %} → "no"
 ```
 
 ### `matches`
@@ -649,7 +649,7 @@ Checks if string matches regular expression.
 **Example with literal value:**
 
 ```
-{% if "user@example.com" is matches("^[^@]+@[^@]+\.[^@]+$") %}
+{% if matches("user@example.com", "^[^@]+@[^@]+\.[^@]+$") %}
   valid email
 {% endif %}
 ```
@@ -663,7 +663,7 @@ Given an external JSON file `emails.json`:
 
 Loaded as variable `contact`:
 ```
-{% if contact.email is matches("^[^@]+@[^@]+\.[^@]+$") %}
+{% if matches(contact.email, "^[^@]+@[^@]+\.[^@]+$") %}
   valid email
 {% endif %}
 ```
@@ -680,7 +680,7 @@ Checks if string starts with prefix.
 **Example with literal value:**
 
 ```
-{% if "hello.txt" is startsWith("hello") %}yes{% endif %} → "yes"
+{% if startsWith("hello.txt", "hello") %}yes{% endif %} → "yes"
 ```
 
 **Example with external JSON data:**
@@ -692,7 +692,7 @@ Given an external JSON file `files.json`:
 
 Loaded as variable `file`:
 ```
-{% if file.filename is startsWith("hello") %}yes{% endif %} → "yes"
+{% if startsWith(file.filename, "hello") %}yes{% endif %} → "yes"
 ```
 
 ## Complete example 
@@ -712,13 +712,13 @@ Loaded as variable `file`:
 
 *File: template.inja*
 ```
-{% if user.name is isString %}Name is valid{% endif %}
-{% if user.email is matches("^[^@]+@[^@]+\.[^@]+$") %}Email format OK{% endif %}
-{% if user.age is isNumber and user.age >= 18 %}Adult{% endif %}
-{% if "admin" is isContained(user.tags) %}Admin user{% endif %}
-{% if user.active is isBoolean and user.active %}Account active{% endif %}
-{% if user.metadata is isNone %}No metadata{% endif %}
-{% if user.config is isMapping %}Configuration present{% endif %}
+{% if isString(user.name) %}Name is valid{% endif %}
+{% if matches(user.email, "^[^@]+@[^@]+\.[^@]+$") %}Email format OK{% endif %}
+{% if isNumber(user.age) and user.age >= 18 %}Adult{% endif %}
+{% if isContained("admin", user.tags) %}Admin user{% endif %}
+{% if isBoolean(user.active) and user.active %}Account active{% endif %}
+{% if isNone(user.metadata) %}No metadata{% endif %}
+{% if isMapping(user.config) %}Configuration present{% endif %}
 ```
 
 ## SEE ALSO
