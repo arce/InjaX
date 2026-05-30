@@ -8,14 +8,13 @@
 
 ```bash
 # Render a template
-injax template.txt data.json output.html
+injax data.json template.inja output
 ```
 
 ## Why InjaX?
 
 - **Familiar syntax** — Uses Jinja2-style delimiters (`{{ }}`, `{% %}`, `{# #}`)
 - **Fast** — Compiled to efficient static binaries, no interpreter overhead
-- **Zero heavy deps** — Header-only with inja and nlohmann/json
 - **Multi-format data** — JSON natively, plus plugins for CSV, YAML, XML, and INI
 - **Extensible** — Plugin system for custom modules
 
@@ -44,7 +43,7 @@ injax template.txt data.json output.html
 
 **Command:**
 ```bash
-injax template.txt data.json output.html
+injax data.json template.inja output.html
 ```
 
 **Output (`output.html`):**
