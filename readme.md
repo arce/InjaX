@@ -65,11 +65,11 @@ You have 2 new messages.
 ## Conditional Tests
 
 ```jinja
-{% if value is string %}String!{% endif %}
-{% if value is number %}Number!{% endif %}
-{% if value is defined %}Exists!{% endif %}
-{% if value is empty %}Nothing here{% endif %}
-{% if "hello" in value %}Contains hello{% endif %}
+{% if isString(value) %}String!{% endif %}
+{% if isNumber(value) %}Number!{% endif %}
+{% if isDefined(value) %}Exists!{% endif %}
+{% if isEmpty(value) %}Nothing here{% endif %}
+{% if contains(value,"hello") %}Contains hello{% endif %}
 ```
 
 Available tests: `isString`, `isNumber`, `isArray`, `isObject`, `isDefined`, `isEmpty`, `contains`, `matches`, `startsWith`, `endsWith`, `isEven`, `isOdd`
