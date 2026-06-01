@@ -76,7 +76,7 @@ Available tests: `isString`, `isNumber`, `isArray`, `isObject`, `isDefined`, `is
 
 ## Use cases
 
-![InjaX Samples](https://gistvis.cc/?id=b3718fd4530cf83517423bcd94537066)
+[InjaX Samples](https://gistvis.cc/?id=b3718fd4530cf83517423bcd94537066)
 
 ## License
 
