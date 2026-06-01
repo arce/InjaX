@@ -74,6 +74,10 @@ You have 2 new messages.
 
 Available tests: `isString`, `isNumber`, `isArray`, `isObject`, `isDefined`, `isEmpty`, `contains`, `matches`, `startsWith`, `endsWith`, `isEven`, `isOdd`
 
+## Use cases
+
+![InjaX Samples](https://gistvis.cc/?id=b3718fd4530cf83517423bcd94537066)
+
 ## License
 
 InjaX is open source software released under the **MIT License**.
