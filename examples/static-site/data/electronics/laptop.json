@@ -1,0 +1,8 @@
+{
+  "id": 2,
+  "name": "Pro Laptop",
+  "category": "Electronics",
+  "price": 1299.99,
+  "description": "16GB RAM, 512GB SSD, Intel i7",
+  "stock": 8
+}

@@ -1,0 +1,9 @@
+{
+  "id": 5,
+  "name": "Classic Jeans",
+  "category": "Clothing",
+  "price": 59.99,
+  "description": "Durable denim, straight cut",
+  "stock": 30,
+  "sizes": ["30", "32", "34", "36"]
+}

@@ -1,0 +1,93 @@
+/* corporate.css - Estilo corporativo profesional */
+
+/* Estilos base */
+.background-root {
+  fill: #f0f2f5;
+}
+
+/* Estilos de diapositivas */
+.slide-background {
+  fill: #ffffff;
+  rx: 10;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+}
+
+/* Estilos de títulos */
+.title-text {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 52px;
+  font-weight: 700;
+  fill: #1a3a5c;
+  letter-spacing: -0.5px;
+}
+
+.subtitle-text {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 28px;
+  fill: #5a6c7e;
+  font-weight: 300;
+}
+
+/* Estilos de contenido */
+.content-text {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 24px;
+  fill: #2c3e50;
+  line-height: 1.6;
+}
+
+.bullet-point {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 22px;
+  fill: #2c3e50;
+}
+
+.bullet-marker {
+  fill: #00a8e8;
+  r: 5;
+}
+
+/* Código */
+.code-background {
+  fill: #1e1e1e;
+  stroke: #333333;
+  stroke-width: 2;
+  rx: 8;
+}
+
+.code-block {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 14px;
+  fill: #d4d4d4;
+}
+
+/* Navegación */
+.slide-number {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  fill: #95a5a6;
+  font-weight: 500;
+}
+
+/* Línea superior */
+.header-line {
+  opacity: 0.9;
+}
+
+/* Animaciones */
+.slide {
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estilos específicos por diapositiva */
+.slide-background-1 {
+  fill: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.slide-background-2 .title-text {
+  fill: #2c3e50;
+}
+
+.slide-background-3 .code-background {
+  fill: #282c34;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+  <header>
+    <h1>{{message}}</h1>
+    <nav>
+      <a href="electronics/index.html">Electronics</a>
+      <a href="clothing/index.html">Clothing</a>
+      <a href="home/index.html">Home</a>
+    </nav>
+  </header>
+  <main>
+    <h2>Our Sections</h2>
+    <p>{{description}}</p>
+  </main>
+  <footer>
+    <p>{{footer}} - {{contact}}</p>
+  </footer>
+</body>
+</html>

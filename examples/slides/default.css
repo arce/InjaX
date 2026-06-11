@@ -1,0 +1,101 @@
+/* default.css - Tema estándar para presentaciones SVG */
+
+/* Estilos base */
+.background-root {
+  fill: #f5f5f5;
+}
+
+/* Fondos de diapositivas */
+.slide-background {
+  fill: #ffffff;
+  rx: 0;
+}
+
+/* Títulos */
+.title-text {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 48px;
+  font-weight: bold;
+  fill: #2c3e50;
+  text-anchor: middle;
+}
+
+.subtitle-text {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  fill: #7f8c8d;
+  text-anchor: middle;
+}
+
+/* Texto de contenido */
+.content-text {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 24px;
+  fill: #34495e;
+}
+
+/* Puntos de lista */
+.bullet-point {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 22px;
+  fill: #2c3e50;
+}
+
+.bullet-marker {
+  fill: #3498db;
+  r: 5;
+}
+
+/* Bloques de código */
+.code-background {
+  fill: #f8f9fa;
+  stroke: #dee2e6;
+  stroke-width: 2;
+  rx: 4;
+  ry: 4;
+}
+
+.code-block {
+  font-family: 'Consolas', 'Courier New', 'Monaco', monospace;
+  font-size: 14px;
+  fill: #2c3e50;
+}
+
+/* Número de diapositiva */
+.slide-number {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  fill: #95a5a6;
+  text-anchor: end;
+}
+
+/* Línea superior de cabecera */
+.header-line {
+  opacity: 0.8;
+}
+
+/* Imágenes */
+.slide-image {
+  border-radius: 4px;
+}
+
+/* Estados hover opcionales */
+.bullet-point:hover {
+  fill: #3498db;
+  cursor: pointer;
+}
+
+/* Estilos específicos para la primera diapositiva */
+#slide-0 .title-text {
+  fill: #2c3e50;
+}
+
+#slide-0 .subtitle-text {
+  fill: #7f8c8d;
+}
+
+/* Estilos para la última diapositiva */
+.slide:last-child .content-text {
+  font-weight: bold;
+}

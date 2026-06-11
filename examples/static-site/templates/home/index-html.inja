@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ category }}</title>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+</head>
+<body>
+  <header>
+    <h1>{{ category }}</h1>
+    <nav>
+      <a href="../electronics/index.html">Electronics</a>
+      <a href="../clothing/index.html">Clothing</a>
+      <a href="../home/index.html">Home</a>
+    </nav>
+  </header>
+  <main>
+      {% for product in page_list %}
+      <article>
+        <h2>{{ product.name }}</h2>
+        <p><strong>Price:</strong> ${{ product.price }}</p>
+        <a href="{{ product._stem }}.html" class="button"><button>View details</button></a>
+      </article>
+      {% endfor %}
+  </main>
+  <footer>
+    <p>© 2026 My Online Store</p>
+  </footer>
+</body>
+</html>

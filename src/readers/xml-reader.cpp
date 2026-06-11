@@ -4,13 +4,17 @@
 #include <string>
 #include <functional>
 
+using json = nlohmann::json;
+
 #if defined(_WIN32) || defined(_WIN64)
   #define EXPORT __declspec(dllexport)
+#elif defined(__APPLE__) || defined(__linux__)
+  #define EXPORT __attribute__((visibility("default")))
 #else
   #define EXPORT
 #endif
 
-using json = nlohmann::json;
+extern "C" {
 
 EXPORT json parse_data(const std::string& filename) {
     if (filename.empty()) return json::object();
@@ -52,4 +56,5 @@ EXPORT json parse_data(const std::string& filename) {
     json result_json;
     result_json[root.name()] = convert(root);
     return result_json;
+}
 }

@@ -1,0 +1,140 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [400, 150]
+      },
+      "properties": {
+        "name": "Madrid",
+        "population": 3223000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [650, 200]
+      },
+      "properties": {
+        "name": "Barcelona",
+        "population": 1620000
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [400, 150],
+          [500, 180],
+          [650, 200],
+          [700, 250]
+        ]
+      },
+      "properties": {
+        "name": "Ruta 1",
+        "distance": "620 km"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [200, 400],
+          [300, 380],
+          [350, 450],
+          [280, 500],
+          [180, 470],
+          [200, 400]
+        ]]
+      },
+      "properties": {
+        "name": "Parque Nacional",
+        "area": "450 km²"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [500, 400],
+          [600, 420],
+          [650, 500],
+          [550, 520],
+          [480, 480],
+          [500, 400]
+        ]]
+      },
+      "properties": {
+        "name": "Zona Industrial",
+        "area": "320 km²"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPoint",
+        "coordinates": [
+          [100, 100],
+          [150, 120],
+          [130, 180],
+          [90, 160]
+        ]
+      },
+      "properties": {
+        "name": "Estaciones de monitoreo"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [100, 500],
+            [200, 520],
+            [300, 510]
+          ],
+          [
+            [300, 510],
+            [400, 530],
+            [500, 520]
+          ]
+        ]
+      },
+      "properties": {
+        "name": "Rutas secundarias"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+          [[
+            [50, 550],
+            [100, 540],
+            [120, 580],
+            [70, 590],
+            [50, 550]
+          ]],
+          [[
+            [700, 550],
+            [750, 560],
+            [740, 600],
+            [690, 590],
+            [700, 550]
+          ]]
+        ]
+      },
+      "properties": {
+        "name": "Áreas recreativas"
+      }
+    }
+  ]
+}

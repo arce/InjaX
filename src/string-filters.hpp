@@ -172,6 +172,14 @@ inline void register_filters(inja::Environment &env) {
   env.add_callback("string", 1, [](inja::Arguments args) {
     return to_string_from_json(*args[0]);
   });
+  env.add_callback("default", 2, [](inja::Arguments args) -> json {
+      const json& value = *args[0];
+      const json& default_value = *args[1];
+    
+      if (value.is_null()) return default_value;
+      if (value.is_string() && value.get<std::string>().empty()) return default_value;
+      return value;
+  });
 }
 
 } // namespace custom_string

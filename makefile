@@ -1,4 +1,10 @@
-# Compilers
+# ============================================================================
+# Complete Makefile for INJAX project (multi-platform)
+# Includes compilation of binaries, modules, readers and packaging.
+# 'graph' module
+# ============================================================================
+
+# Cross compilers / hosts
 CROSS_LINUX_ARM := aarch64-linux-musl-g++
 CROSS_LINUX_INTEL := x86_64-linux-musl-g++
 CROSS_WIN := x86_64-w64-mingw32-g++
@@ -23,12 +29,14 @@ READERS_DIR := src/readers
 # Main source files
 MAIN_SRC := $(SRC_DIR)/injax.cpp
 
+# ============================================================================
 # Modules
-MODULES := query chart
+# ============================================================================
+MODULES := query chart graph geo tree
 MODULES_SRC := $(addprefix $(MODULES_DIR)/, $(addsuffix -module.cpp, $(MODULES)))
 
 # Readers
-READERS := yaml csv xml ini
+READERS := yaml csv xml ini mkd
 READERS_SRC := $(addprefix $(READERS_DIR)/, $(addsuffix -reader.cpp, $(READERS)))
 
 # Output directories
@@ -67,7 +75,10 @@ DIRS := $(LINUX_ARM_DIR) $(LINUX_ARM_DIR)/modules $(LINUX_ARM_DIR)/readers \
         $(WIN_DIR) $(WIN_DIR)/modules $(WIN_DIR)/readers \
         $(DIST_DIR) $(DIST_LINUX_ARM) $(DIST_LINUX_INTEL) $(DIST_MAC_ARM) $(DIST_MAC_INTEL) $(DIST_WIN)
 
-.PHONY: all clean $(TARGETS) modules readers dist dist-all
+.PHONY: all clean $(TARGETS) modules readers dist dist-all help \
+        modules-linux-arm modules-linux-intel modules-mac-arm modules-mac-intel modules-win \
+        readers-linux-arm readers-linux-intel readers-mac-arm readers-mac-intel readers-win \
+        dist-linux-arm dist-linux-intel dist-mac-arm dist-mac-intel dist-win dist-all dist-combined
 
 # Main targets
 TARGETS := linuxArm linuxIntel macArm macIntel win
@@ -126,6 +137,15 @@ $(LINUX_ARM_DIR)/modules/libquery.so: $(MODULES_DIR)/query-module.cpp
 $(LINUX_ARM_DIR)/modules/libchart.so: $(MODULES_DIR)/chart-module.cpp
 	$(CROSS_LINUX_ARM) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
+$(LINUX_ARM_DIR)/modules/libgraph.so: $(MODULES_DIR)/graph-module.cpp
+	$(CROSS_LINUX_ARM) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(LINUX_ARM_DIR)/modules/libgeo.so: $(MODULES_DIR)/geo-module.cpp
+	$(CROSS_LINUX_ARM) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(LINUX_ARM_DIR)/modules/libtree.so: $(MODULES_DIR)/tree-module.cpp
+	$(CROSS_LINUX_ARM) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+
 # Linux Intel modules
 modules-linux-intel: $(MODULES_LINUX_INTEL) | $(LINUX_INTEL_DIR)/modules
 
@@ -133,6 +153,15 @@ $(LINUX_INTEL_DIR)/modules/libquery.so: $(MODULES_DIR)/query-module.cpp
 	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
 $(LINUX_INTEL_DIR)/modules/libchart.so: $(MODULES_DIR)/chart-module.cpp
+	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+
+$(LINUX_INTEL_DIR)/modules/libgraph.so: $(MODULES_DIR)/graph-module.cpp
+	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(LINUX_INTEL_DIR)/modules/libgeo.so: $(MODULES_DIR)/geo-module.cpp
+	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(LINUX_INTEL_DIR)/modules/libtree.so: $(MODULES_DIR)/tree-module.cpp
 	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
 # Mac ARM modules
@@ -144,6 +173,15 @@ $(MAC_ARM_DIR)/modules/libquery.dylib: $(MODULES_DIR)/query-module.cpp
 $(MAC_ARM_DIR)/modules/libchart.dylib: $(MODULES_DIR)/chart-module.cpp
 	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
 
+$(MAC_ARM_DIR)/modules/libgraph.dylib: $(MODULES_DIR)/graph-module.cpp
+	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+
+$(MAC_ARM_DIR)/modules/libgeo.dylib: $(MODULES_DIR)/geo-module.cpp
+	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+	
+$(MAC_ARM_DIR)/modules/libtree.dylib: $(MODULES_DIR)/tree-module.cpp
+	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+
 # Mac Intel modules
 modules-mac-intel: $(MODULES_MAC_INTEL) | $(MAC_INTEL_DIR)/modules
 
@@ -153,6 +191,15 @@ $(MAC_INTEL_DIR)/modules/libquery.dylib: $(MODULES_DIR)/query-module.cpp
 $(MAC_INTEL_DIR)/modules/libchart.dylib: $(MODULES_DIR)/chart-module.cpp
 	$(CROSS_MAC_INTEL) --target=x86_64-apple-darwin -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
 
+$(MAC_INTEL_DIR)/modules/libgraph.dylib: $(MODULES_DIR)/graph-module.cpp
+	$(CROSS_MAC_INTEL) --target=x86_64-apple-darwin -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+
+$(MAC_INTEL_DIR)/modules/libgeo.dylib: $(MODULES_DIR)/geo-module.cpp
+	$(CROSS_MAC_INTEL) --target=x86_64-apple-darwin -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+
+$(MAC_INTEL_DIR)/modules/libtree.dylib: $(MODULES_DIR)/tree-module.cpp
+	$(CROSS_MAC_INTEL) --target=x86_64-apple-darwin -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+
 # Windows modules
 modules-win: $(MODULES_WIN) | $(WIN_DIR)/modules
 
@@ -160,6 +207,15 @@ $(WIN_DIR)/modules/libquery.dll: $(MODULES_DIR)/query-module.cpp
 	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
 $(WIN_DIR)/modules/libchart.dll: $(MODULES_DIR)/chart-module.cpp
+	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@
+
+$(WIN_DIR)/modules/libgraph.dll: $(MODULES_DIR)/graph-module.cpp
+	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(WIN_DIR)/modules/libgeo.dll: $(MODULES_DIR)/geo-module.cpp
+	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(WIN_DIR)/modules/libtree.dll: $(MODULES_DIR)/tree-module.cpp
 	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
 # ============================================================================
@@ -180,6 +236,9 @@ $(LINUX_ARM_DIR)/readers/libxml.so: $(READERS_DIR)/xml-reader.cpp
 
 $(LINUX_ARM_DIR)/readers/libini.so: $(READERS_DIR)/ini-reader.cpp
 	$(CROSS_LINUX_ARM) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(LINUX_ARM_DIR)/readers/libmkd.so: $(READERS_DIR)/mkd-reader.cpp
+	$(CROSS_LINUX_ARM) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
 # Linux Intel readers
 readers-linux-intel: $(READERS_LINUX_INTEL) | $(LINUX_INTEL_DIR)/readers
@@ -195,6 +254,9 @@ $(LINUX_INTEL_DIR)/readers/libxml.so: $(READERS_DIR)/xml-reader.cpp
 
 $(LINUX_INTEL_DIR)/readers/libini.so: $(READERS_DIR)/ini-reader.cpp
 	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
+	
+$(LINUX_INTEL_DIR)/readers/libmkd.so: $(READERS_DIR)/mkd-reader.cpp
+	$(CROSS_LINUX_INTEL) $(CXXFLAGS_LINUX_SHARED) -I$(INCLUDE_DIR) $< -o $@
 
 # Mac ARM readers
 readers-mac-arm: $(READERS_MAC_ARM) | $(MAC_ARM_DIR)/readers
@@ -209,6 +271,9 @@ $(MAC_ARM_DIR)/readers/libxml.dylib: $(READERS_DIR)/xml-reader.cpp
 	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
 
 $(MAC_ARM_DIR)/readers/libini.dylib: $(READERS_DIR)/ini-reader.cpp
+	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+	
+$(MAC_ARM_DIR)/readers/libmkd.dylib: $(READERS_DIR)/mkd-reader.cpp
 	$(CROSS_MAC_ARM) -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
 
 # Mac Intel readers
@@ -226,6 +291,9 @@ $(MAC_INTEL_DIR)/readers/libxml.dylib: $(READERS_DIR)/xml-reader.cpp
 $(MAC_INTEL_DIR)/readers/libini.dylib: $(READERS_DIR)/ini-reader.cpp
 	$(CROSS_MAC_INTEL) --target=x86_64-apple-darwin -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
 
+$(MAC_INTEL_DIR)/readers/libmkd.dylib: $(READERS_DIR)/mkd-reader.cpp
+	$(CROSS_MAC_INTEL) --target=x86_64-apple-darwin -std=c++17 -dynamiclib -o $@ $< -O3 -Wall -Wextra -I$(INCLUDE_DIR)
+
 # Windows readers
 readers-win: $(READERS_WIN) | $(WIN_DIR)
 
@@ -239,6 +307,9 @@ $(WIN_DIR)/readers/libxml.dll: $(READERS_DIR)/xml-reader.cpp
 	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@ -Wl,--out-implib,$(WIN_DIR)/libxml.a
 
 $(WIN_DIR)/readers/libini.dll: $(READERS_DIR)/ini-reader.cpp
+	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@ -Wl,--out-implib,$(WIN_DIR)/libini.a
+
+$(WIN_DIR)/readers/libmkd.dll: $(READERS_DIR)/mkd-reader.cpp
 	$(CROSS_WIN) $(CXXFLAGS_WIN_SHARED) -I$(INCLUDE_DIR) $< -o $@ -Wl,--out-implib,$(WIN_DIR)/libini.a
 
 # ============================================================================
@@ -372,14 +443,14 @@ help:
 	@echo "Available targets:"
 	@echo ""
 	@echo "Build targets:"
-	@echo "  all           - Build everything (binaries, modules and readers for all platforms)"
-	@echo "  linuxArm      - Build for Linux ARM"
-	@echo "  linuxIntel    - Build for Linux Intel"
-	@echo "  macArm        - Build for Mac ARM"
-	@echo "  macIntel      - Build for Mac Intel"
-	@echo "  win           - Build for Windows"
-	@echo "  modules       - Build modules for all platforms"
-	@echo "  readers       - Build readers for all platforms"
+	@echo "  all             - Build everything (binaries, modules and readers for all platforms)"
+	@echo "  linuxArm        - Build for Linux ARM"
+	@echo "  linuxIntel      - Build for Linux Intel"
+	@echo "  macArm          - Build for Mac ARM"
+	@echo "  macIntel        - Build for Mac Intel"
+	@echo "  win             - Build for Windows"
+	@echo "  modules         - Build modules for all platforms"
+	@echo "  readers         - Build readers for all platforms"
 	@echo ""
 	@echo "Distribution packages (ZIP):"
 	@echo "  dist-linux-arm    - Create Linux ARM distribution package"
@@ -388,24 +459,24 @@ help:
 	@echo "  dist-mac-intel    - Create Mac Intel distribution package"
 	@echo "  dist-win          - Create Windows distribution package"
 	@echo "  dist-all          - Create all distribution packages"
-	@echo "  dist-combined     - Create a single ZIP with all platforms"
+	@echo "  dist-combined      - Create a single ZIP with all platforms"
 	@echo ""
 	@echo "Clean targets:"
-	@echo "  clean         - Remove entire bin and dist directories"
-	@echo "  clean-linux   - Remove Linux binaries"
-	@echo "  clean-mac     - Remove Mac binaries"
-	@echo "  clean-win     - Remove Windows binaries"
-	@echo "  clean-modules - Remove all modules"
-	@echo "  clean-readers - Remove all readers"
-	@echo "  clean-dist    - Remove distribution packages only"
+	@echo "  clean           - Remove entire bin and dist directories"
+	@echo "  clean-linux     - Remove Linux binaries"
+	@echo "  clean-mac       - Remove Mac binaries"
+	@echo "  clean-win       - Remove Windows binaries"
+	@echo "  clean-modules   - Remove all modules"
+	@echo "  clean-readers   - Remove all readers"
+	@echo "  clean-dist      - Remove distribution packages only"
 	@echo ""
 	@echo "Help:"
-	@echo "  help          - Show this help message"
+	@echo "  help            - Show this help message"
 	@echo ""
 	@echo "Examples:"
-	@echo "  make dist-all          - Build everything and create all distribution packages"
-	@echo "  make dist-mac-arm      - Build and package only for Mac ARM"
-	@echo "  make dist-combined     - Create a single ZIP with all platforms"
+	@echo "  make dist-all           - Build everything and create all distribution packages"
+	@echo "  make dist-mac-arm       - Build and package only for Mac ARM"
+	@echo "  make dist-combined      - Create a single ZIP with all platforms"
 
 # Default target
 .DEFAULT_GOAL := help

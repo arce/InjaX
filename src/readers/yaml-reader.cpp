@@ -16,6 +16,7 @@ using json = nlohmann::json;
 #endif
 
 extern "C" {
+	
     EXPORT json parse_data(const std::string& filename) {
         if (filename.empty()) return json::object();
 

@@ -4,16 +4,20 @@
 #include <vector>
 #include <algorithm>
 
-#if defined(_WIN32) || defined(_WIN64)
-  #define EXPORT extern "C" __declspec(dllexport)
-#else
-  #define EXPORT extern "C"
-#endif
-
 using json = nlohmann::json;
 
-json parse_value(const std::string& value) {
-    if (value.empty()) return nullptr;
+#if defined(_WIN32) || defined(_WIN64)
+  #define EXPORT __declspec(dllexport)
+#elif defined(__APPLE__) || defined(__linux__)
+  #define EXPORT __attribute__((visibility("default")))
+#else
+  #define EXPORT
+#endif
+
+extern "C" {
+    
+  json parse_value(const std::string& value) {
+    if (value.empty()) return json::object();
     
     try {
         size_t pos;
@@ -66,4 +70,5 @@ EXPORT json parse_data(const std::string& filename) {
     json result;
     result["data"] = rows_array;
     return result;
+  }
 }

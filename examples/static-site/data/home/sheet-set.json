@@ -1,0 +1,9 @@
+{
+  "id": 7,
+  "name": "Sheet Set",
+  "category": "Home",
+  "price": 49.99,
+  "description": "100% microfiber, 180 thread count",
+  "stock": 20,
+  "sizes": ["Twin", "Full", "Queen"]
+}

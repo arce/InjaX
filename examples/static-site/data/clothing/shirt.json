@@ -1,0 +1,9 @@
+{
+  "id": 4,
+  "name": "Cotton Shirt",
+  "category": "Clothing",
+  "price": 39.99,
+  "description": "100% cotton, various colors",
+  "stock": 50,
+  "sizes": ["S", "M", "L", "XL"]
+}
