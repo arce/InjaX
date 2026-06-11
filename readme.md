@@ -4,20 +4,6 @@
 
 **InjaX** is a modern, high-performance template engine for C++ that brings the elegance of Jinja2 syntax to the C++ ecosystem. Use it as a standalone CLI tool.
 
-## Quick Start
-
-# Single file mode: render one template with one data file
-
-```bash
-injax data.json template.inja output.html
-
-# Directory mode: batch render entire sites (Hugo-like)
-
-```bash
-injax data/ templates/ output/
-
-```
-
 ## Why InjaX?
 
 * **Familiar syntax** — Uses Jinja2-style delimiters (`{{ }}`, `{% %}`, `{# #}`)
