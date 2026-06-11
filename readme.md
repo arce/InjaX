@@ -6,11 +6,14 @@
 
 ## Quick Start
 
-```bash
 # Single file mode: render one template with one data file
+
+```bash
 injax data.json template.inja output.html
 
 # Directory mode: batch render entire sites (Hugo-like)
+
+```bash
 injax data/ templates/ output/
 
 ```
@@ -401,10 +404,14 @@ Available tests: `isString`, `isNumber`, `isArray`, `isObject`, `isDefined`, `is
 ### For Directory Mode
 
 * Build scalable static sites, portfolios, and blogs.
-* Generate multi-page websites and documentation from clean collections of raw structured content (JSON, YAML, CSV).
+* Generate multi-page websites and documentation from clean collections of raw structured content (JSON, YAML, CSV, MKD).
 * Generate multiple parallel output formats (e.g. HTML + XML + Markdown RSS feeds) simultaneously from the same exact data.
 * Leverage **Upstream Inheritance** by putting common layout configurations inside the root `templates/` folder to avoid duplicating templates across every subfolder.
 * Use `index-{format}.inja` for building listings pages within an active directory level.
+
+## Use cases
+
+[InjaX Samples](https://gistvis.netlify.app/?id=b3718fd4530cf83517423bcd94537066)
 
 ## License
 
