@@ -369,8 +369,9 @@ void process_directory_mode(const std::string &data_dir, const std::string &temp
 }
 
 int main(int argc, char *argv[]) {
-  if (argc < 4) {
-    std::cerr << "Usage: " << argv[0] << " <data> <template> <output>" << std::endl;
+  if (argc < 3) {
+    std::cerr << "Usage: " << argv[0] << " <data> <template.inja>" << std::endl;
+    std::cerr << "   or: " << argv[0] << " <data> <template> <output>" << std::endl;
     std::cerr << "   or: " << argv[0] << " <data-directory> <template-directory> <output-directory>" << std::endl;
     return 1;
   }
@@ -380,7 +381,6 @@ int main(int argc, char *argv[]) {
 
   const std::string source = argv[1];
   const std::string template_source = argv[2];
-  const std::string output_target = argv[3];
 
   std::vector<std::unique_ptr<DynamicLibrary>> loaded_modules;
   inja::Environment env;
@@ -415,14 +415,33 @@ int main(int argc, char *argv[]) {
       }
     }
 
-    bool is_directory_mode = fs::is_directory(source) && 
-                             fs::is_directory(template_source) && 
-                             (fs::exists(output_target) ? fs::is_directory(output_target) : true);
+    if (argc == 3) {
+      fs::path template_path(template_source);
+      std::string format = get_format_from_template(template_path);
+      if (format.empty()) {
+        throw std::runtime_error(
+          "Template must include a format suffix separated by '-' (e.g. chart-svg.inja). "
+          "Got: " + template_path.filename().string());
+      }
 
-    if (is_directory_mode) {
-      process_directory_mode(source, template_source, output_target, env, exe_dir, loaded_modules);
-    } else {
+      std::string template_stem = template_path.stem().string();
+      std::string template_base = template_stem.substr(0, template_stem.rfind('-'));
+      std::string data_stem = fs::path(source).stem().string();
+      std::string output_target = data_stem + "-" + template_base + "." + format;
+
       process_single_file(source, template_source, output_target, env, exe_dir, loaded_modules);
+    } else {
+      const std::string output_target = argv[3];
+
+      bool is_directory_mode = fs::is_directory(source) &&
+                               fs::is_directory(template_source) &&
+                               (fs::exists(output_target) ? fs::is_directory(output_target) : true);
+
+      if (is_directory_mode) {
+        process_directory_mode(source, template_source, output_target, env, exe_dir, loaded_modules);
+      } else {
+        process_single_file(source, template_source, output_target, env, exe_dir, loaded_modules);
+      }
     }
 
   } catch (const std::exception &e) {
